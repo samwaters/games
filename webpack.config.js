@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const ESLintPlugin = require('eslint-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const APP_DIR = path.join(__dirname, 'src')
 const BUILD_DIR = path.join(__dirname, 'dist')
@@ -11,8 +12,12 @@ module.exports = {
         port: 9002,
         static: path.join(__dirname, 'dist'),
     },
+    devtool: 'inline-source-map',
     entry: {
-        app: APP_DIR + '/index.tsx',
+        app: {
+            dependOn: "vendor",
+            import: APP_DIR + '/index.tsx'
+        },
         vendor: [
             '@reduxjs/toolkit',
             '@redux-saga/core',
@@ -42,11 +47,15 @@ module.exports = {
         path: BUILD_DIR,
     },
     plugins: [
-        new webpack.optimize.SplitChunksPlugin(),
         new webpack.DefinePlugin({
             mode: JSON.stringify(process.env.NODE_ENV || 'development'),
         }),
         new ESLintPlugin(),
+        new HtmlWebpackPlugin({
+            filename: "index.html",
+            template: "./src/index.html",
+            title: "Games"
+        })
     ],
     resolve: {
         alias: {

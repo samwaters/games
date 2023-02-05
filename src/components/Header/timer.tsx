@@ -15,5 +15,6 @@ export const Timer = () => {
         {timerValue}
         <button onClick={() => dispatch(timerEnableAction())}>BANG</button>
         <button onClick={() => dispatch(timerDisableAction())}>BONG</button>
+        <button onClick={() => dispatch(timerDisableAction())}>SPLATTICP</button>
     </S.TimerContainer>
 }
