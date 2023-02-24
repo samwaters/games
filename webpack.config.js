@@ -2,6 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 const ESLintPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const dotenv = require("dotenv")
+dotenv.config()
 
 const APP_DIR = path.join(__dirname, 'src')
 const BUILD_DIR = path.join(__dirname, 'dist')
@@ -48,6 +50,8 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
+            firebaseApiKey: JSON.stringify(process.env.FIREBASE_API_KEY),
+            firebaseAppId: JSON.stringify(process.env.FIREBASE_APP_ID),
             mode: JSON.stringify(process.env.NODE_ENV || 'development'),
         }),
         new ESLintPlugin(),

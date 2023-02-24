@@ -3,8 +3,10 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { Reset } from 'styled-reset'
 import { theme } from 'theme/theme'
 import { ErrorBoundary } from 'components/ErrorBoundary/errorboundary'
-import { UI } from 'components/UI/ui'
+import { Interface } from 'components/interface'
 import { BrowserRouter as Router } from "react-router-dom";
+
+require("./firebase")
 
 const GlobalStyles = createGlobalStyle`
   * { box-sizing: border-box; }
@@ -17,7 +19,7 @@ export const App = () => <>
     <ThemeProvider theme={theme}>
         <ErrorBoundary>
             <Router>
-                <UI />
+                <Interface />
             </Router>
         </ErrorBoundary>
     </ThemeProvider>
