@@ -4,7 +4,7 @@ import { Reset } from 'styled-reset'
 import { theme } from 'theme/theme'
 import { ErrorBoundary } from 'components/ErrorBoundary/errorboundary'
 import { Interface } from 'components/interface'
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 
 require("./firebase")
 

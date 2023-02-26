@@ -11,13 +11,14 @@ import {
     Typography
 } from "@mui/material";
 import { Menu as MenuIcon } from '@mui/icons-material';
-import {Route, Routes, useNavigate} from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import { CardGames } from "components/cardgames";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {logAction} from "store/logger.store";
-import {AccountMenu} from "components/Account/menu";
-import {PuzzleGames} from "components/puzzlegames";
+import { logAction } from "store/logger.store";
+import { AccountMenu } from "components/Account/menu";
+import { PuzzleGames } from "components/puzzlegames";
+import { AccountContainer } from "components/Account/container";
 
 export const Interface = () => {
     const dispatch = useDispatch()
@@ -25,8 +26,14 @@ export const Interface = () => {
     const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
     const menuOpen = Boolean(menuAnchorEl)
 
+    const handleNavigation = (path: string, trackName: string) => {
+        navigate(path)
+        dispatch(logAction(trackName))
+    }
+
     const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setMenuAnchorEl(event.currentTarget)
+        dispatch(logAction("profile_menu_click"))
     }
     const handleMenuClose = () => {
         setMenuAnchorEl(null)
@@ -57,11 +64,11 @@ export const Interface = () => {
                     sx={{ display: {xs: 'none', md: 'flex'}}}
                 >
                     <Button
-                        onClick={() => navigate("/card")}
+                        onClick={() => handleNavigation("/card", "cardgames_click")}
                         sx={{ my: 2, color: 'white', display: 'block' }}
                     >Card Games</Button>
                     <Button
-                        onClick={() => navigate("/puzzle")}
+                        onClick={() => handleNavigation("/puzzle", "puzzlegames_click")}
                         sx={{ my: 2, color: 'white', display: 'block' }}
                     >Puzzle Games</Button>
                 </Box>
@@ -78,6 +85,7 @@ export const Interface = () => {
             <AccountMenu anchor={menuAnchorEl} onClose={handleMenuClose} open={menuOpen} />
         </AppBar>
         <Routes>
+            <Route path="/account" element={<AccountContainer />} />
             <Route path="/card" element={<CardGames />} />
             <Route path="/puzzle" element={<PuzzleGames />} />
             <Route path="*" element={<CardGames />} />
